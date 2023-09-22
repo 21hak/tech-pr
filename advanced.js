@@ -1,24 +1,25 @@
-const MIN_HOUR = 7; // 최소 시간
-const MAX_HOUR = 9; // 최대 시간
+const MIN_HOUR = 8; // 최소 시간
+const MAX_HOUR = 10; // 최대 시간
 
-/**
- * @description 브라우저의 local storage에서 direction 정보를 가져옵니다.
- */
+//
+// @description 브라우저의 local storage에서 direction 정보를 가져옵니다.
+//
 const getDirection = () => {
-  return window.localStorage.getItem("direction");
+  const dir = window.localStorage.getItem("direction");
+  if (!dir) return "forward";
+  return dir;
 };
 
-/**
- * @description 브라우저의 local storage에서 direction 정보를 갱신합니다.
- */
+//
+// @description 브라우저의 local storage에서 direction 정보를 갱신합니다.
+//
 const setDirection = (direction) => {
   window.localStorage.setItem("direction", direction);
 };
 
-/**
- * @description 코레일의 다음 버튼을 가져옵니다.
- * @returns 다음 버튼 a 태그. 없는 경우 undefined
- */
+// @description 코레일의 다음 버튼을 가져옵니다.
+// @returns 다음 버튼 a 태그. 없는 경우 undefined
+//
 const getNextButton = () => {
   const table = document.getElementsByClassName("btn")[0];
   const tbody = table.getElementsByTagName("tbody")[0];
@@ -34,10 +35,10 @@ const getNextButton = () => {
   return;
 };
 
-/**
- * @description 코레일의 이전 버튼을 가져옵니다.
- * @returns 이전 버튼 a 태그. 없는 경우 undefined
- */
+//
+// @description 코레일의 이전 버튼을 가져옵니다.
+// @returns 이전 버튼 a 태그. 없는 경우 undefined
+//
 const getPrevButton = () => {
   const table = document.getElementsByClassName("btn")[0];
   const tbody = table.getElementsByTagName("tbody")[0];
@@ -51,11 +52,11 @@ const getPrevButton = () => {
   return;
 };
 
-/**
- * @description 출발 시간시간을 가져와서 지정 시간보다 이른지, 늦는지 반환합니다.
- * @param 현재 tr의 td collection
- * @returns 지정 시간보다 이르면 early, 늦으면 late, 적절하면 ok
- */
+//
+// @description 출발 시간시간을 가져와서 지정 시간보다 이른지, 늦는지 반환합니다.
+// @param 현재 tr의 td collection
+// @returns 지정 시간보다 이르면 early, 늦으면 late, 적절하면 ok
+//
 const getTimeStatus = (tdCollection) => {
   const td = tdCollection[2];
   const departureHour = parseInt(td.childNodes[2].textContent.split(":")[0]);
@@ -65,11 +66,11 @@ const getTimeStatus = (tdCollection) => {
   return "ok";
 };
 
-/**
- * @description 예약 상태를 반환합니다.
- * @param 현재 tr의 td collection
- * @returns 예약 상태 텍스트
- */
+//
+// @description 예약 상태를 반환합니다.
+// @param 현재 tr의 td collection
+// @returns 예약 상태 텍스트
+//
 const getReservationStatus = (tdCollection) => {
   const td = tdCollection[5];
   const img = td.getElementsByTagName("img")[0];
@@ -77,11 +78,11 @@ const getReservationStatus = (tdCollection) => {
   return imgAlt;
 };
 
-/**
- * @description 예약 a 태그를 반환합니다.
- * @param 현재 tr의 td collection
- * @returns 예약 a 태그
- */
+//
+// @description 예약 a 태그를 반환합니다.
+// @param 현재 tr의 td collection
+// @returns 예약 a 태그
+//
 const getReservationButton = (tdCollection) => {
   const td = tdCollection[5];
   const aTag = td.getElementsByTagName("a")[0];
@@ -123,7 +124,7 @@ for (const tr of trElements) {
 // 현재 페이지서 예약이 불가능한 경우 이전 또는 다음 버튼을 클릭
 if (!canReserve) {
   setTimeout(() => {
-    const direction = getDirection();
+    let direction = getDirection();
     if (direction === "forward") {
       const nextButton = getNextButton();
       if (nextButton) nextButton.click();

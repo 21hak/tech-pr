@@ -1,4 +1,3 @@
-let canReserve = false;
 // id가 tableResult인 element를 가져옴
 const table = document.getElementById("tableResult");
 // table에서 tag 이름이 tbody인 element를 가져옴
@@ -15,7 +14,6 @@ for (const tr of trElements) {
   // img 요소의 alt 속성에 접근
   const imgAlt = img.getAttribute("alt");
   if (imgAlt === "예약하기") {
-    canReserve = true;
     if (window.confirm("예매 하시겠습니까")) {
       aTag.click();
     } else {
